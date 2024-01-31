@@ -34,8 +34,8 @@ public class GameManager : MonoBehaviour
         //set children
         SpawnChildren(asteroid, asteroidSo.initialSize - 1);
         
-        //set velocity
-        //TODO - set velocity
+        //get it moving
+        asteroid.GetComponent<AsteroidMovement>().FreeAsteroid();
     }
 
     private void SpawnChildren(GameObject asteroid, int stage)
@@ -48,6 +48,13 @@ public class GameManager : MonoBehaviour
         //set stuff...
         SetAsteroidFeatures(child1, stage);
         SetAsteroidFeatures(child2, stage);
+
+        child1.GetComponent<Rigidbody>().isKinematic = true;
+        child2.GetComponent<Rigidbody>().isKinematic = true;
+
+        child1.GetComponent<Collider>().enabled = false;
+        child2.GetComponent<Collider>().enabled = false;
+
         
         SpawnChildren(child1, stage - 1);
         SpawnChildren(child2, stage - 1);
@@ -57,6 +64,7 @@ public class GameManager : MonoBehaviour
     {
         Vector3 randomRotation = new Vector3(Random.Range(0, 90), Random.Range(0, 90), Random.Range(0, 90));
         Vector3 randomShift = new Vector3(Random.Range(0, 0.5f), Random.Range(0, 0.5f), 0);
+        Vector3 randomDirection = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0);
         //offset position slightly
         asteroid.transform.localPosition = Vector3.zero + randomShift;
         asteroid.transform.Rotate(randomRotation);
@@ -64,6 +72,8 @@ public class GameManager : MonoBehaviour
         //set size
         asteroid.transform.localScale *= stage * 1.0f / asteroidSo.initialSize;
 
-        //set velocity?
+        //set velocity
+        asteroid.GetComponent<AsteroidMovement>().Velocity = Random.Range(5.0f, 10.0f) / stage;
+        asteroid.GetComponent<AsteroidMovement>().Direction = randomDirection;
     }
 }
