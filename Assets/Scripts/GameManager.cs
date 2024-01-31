@@ -32,19 +32,25 @@ public class GameManager : MonoBehaviour
         SetAsteroidFeatures(asteroid,asteroidSo.initialSize);
         
         //set children
-        //TODO - make recursive so that parenting is recursive
-        for (int x = asteroidSo.initialSize - 1; x > 0; x--)
-        {
-            GameObject child1 = Instantiate(asteroidSo.GetRandomAsteroidPrefab(), asteroid.transform);
-            GameObject child2 = Instantiate(asteroidSo.GetRandomAsteroidPrefab(), asteroid.transform);
-            
-            //set stuff...
-            SetAsteroidFeatures(child1, x);
-            SetAsteroidFeatures(child2, x);
-        }
+        SpawnChildren(asteroid, asteroidSo.initialSize - 1);
         
         //set velocity
         //TODO - set velocity
+    }
+
+    private void SpawnChildren(GameObject asteroid, int stage)
+    {
+        if(stage <= 0) return;
+        
+        GameObject child1 = Instantiate(asteroidSo.GetRandomAsteroidPrefab(), asteroid.transform);
+        GameObject child2 = Instantiate(asteroidSo.GetRandomAsteroidPrefab(), asteroid.transform);
+            
+        //set stuff...
+        SetAsteroidFeatures(child1, stage);
+        SetAsteroidFeatures(child2, stage);
+        
+        SpawnChildren(child1, stage - 1);
+        SpawnChildren(child2, stage - 1);
     }
 
     private void SetAsteroidFeatures(GameObject asteroid, int stage)
@@ -56,7 +62,7 @@ public class GameManager : MonoBehaviour
         asteroid.transform.Rotate(randomRotation);
         
         //set size
-        asteroid.transform.localScale *= stage * 1.0f / 3.0f;
+        asteroid.transform.localScale *= stage * 1.0f / asteroidSo.initialSize;
 
         //set velocity?
     }
