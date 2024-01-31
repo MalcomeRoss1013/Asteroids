@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TurnerScreenWrap : MonoBehaviour
 {
-    [SerializeField]
+    
     Camera cam;
     Collider collider;
 
@@ -12,6 +12,7 @@ public class TurnerScreenWrap : MonoBehaviour
     void Start()
     {
         collider = GetComponent<Collider>();
+        cam = Camera.main;
     }
 
     // Update is called once per frame
