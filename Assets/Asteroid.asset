@@ -16,3 +16,8 @@ MonoBehaviour:
   initialSpeed: 10
   asteroidPrefabs:
   - {fileID: 8632666237150201534, guid: 035cecd51c45e9d4ab634d3a5f269713, type: 3}
+  - {fileID: 6661762679034157059, guid: 183e00e098b735a4eb9309b1124728ba, type: 3}
+  - {fileID: 8502698128284568083, guid: 76c8bca9e8b37ad49b7a561bc52c8b69, type: 3}
+  onAsteroidDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
